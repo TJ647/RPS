@@ -1,0 +1,23 @@
+body {
+    background-color: #ccc;
+}
+.selections {
+    display: flex;
+    justify-content: center;
+    margin-top: 4rem;
+
+}
+#rock-btn,#paper-btn,#scissor-btn {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 6rem;
+    transition: 100ms;
+}
+
+
+#rock-btn:hover,#paper-btn:hover,#scissor-btn:hover {
+    transform: scale(1.2);
+
+}

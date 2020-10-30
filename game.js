@@ -1,44 +1,66 @@
-for (i=1 ;i<6;i++){
-var  playerSelection=prompt("Do you choose rock, paper or scissor?").toLocaleLowerCase();
-if (! playerSelection){
-    document.write("you cheated , refresh and restart again");
-}else {
-    document.write("player :" + ":------" + playerSelection +" ")
+let computerCount =0;
+let playerCount=0;
+let playerSelection;
+
+
+
+function computerPlay() {
+    let moves= ['rock','paper','scissor'];
+    return moves [Math.floor(Math.random()*moves.length)];
 }
-var computerSelection=Math.floor(Math.random()*3)+1;
-if(computerSelection===1) {
-    computerSelection="rock"
-}else if(computerSelection===2){
-    computerSelection="paper"
-}else{
-    computerSelection="scissor"
+
+
+
+let rockButton=document.getElementById("rock-btn");
+rockButton.addEventListener('click',()=> {
+    singleResult.innerHTML=playRound("rock");
+})
+
+
+let paperButton=document.getElementById("paper-btn");
+paperButton.addEventListener('click',()=> {
+    singleResult.innerHTML=playRound("paper");
+})
+
+
+let scissorButton=document.getElementById("scissor-btn");
+scissorButton.addEventListener('click',()=> {
+    singleResult.innerHTML=playRound("scissor");
+})
+
+
+function playRound(playerSelection){
+    const computerSelection=computerPlay();
+    let result;
+    if (playerSelection=="rock" && computerSelection=="scissor"){
+        playerCount++;
+        result="you win!"
+        playerScore.innerHTML="your Score= " + playerCount
+        document.body.appendChild(playerScore);
+    }else if (playerSelection == "scissors" && computerSelection == "paper"){
+        playerCount++;
+        result = "You Win! " + playerSelection + " beats " + computerSelection + "!";
+        playerScore.innerHTML = "Your Score = " + playerCount;
+        document.body.appendChild(playerScore);
+    } else if (playerSelection === computerSelection){
+        result = "Draw! Try again!";
+    } else {
+        computerCount++;
+        result = "You Lose! " + computerSelection + " beats " + playerSelection + "!";
+        computerScore.innerHTML = "Computer Score = " + computerCount;
+        document.body.appendChild(computerScore);
+    }if (computerCount === 5) alert("Computer Wins!");
+    if (playerCount === 5) alert("You Win!");
+    return result;
+    
 }
-document.write("computer :" + ":------" + computerSelection +" ");
-var game=function(choise1,choise2){
-    if(choise1===choise2){
-        return "<strong> It's a tie </strong>";
-    }if(choise1==="rock"){
-        if(choise2==="scissor"){
-            return "<strong> you win! </strong> rock beats scissor"
-        }else {
-            return "<strong> you lose </strong> paper covers rock";
-        }
-    }
-    if(choise1==="paper"){
-        if(choise2==="rock"){
-            return "<strong> you win!</strong> paper covers rock";
-        }else{
-            return "<strong> you lose</strong> scissor cuts paper";
-        }
-    }
-    if (choise1==="scissor"){
-        if (choise2==="rock"){
-            return "<strong> you lose </strong> rock breaks scissor";
-        }else {
-            return "<strong> you win! </strong> scissor cuts paper";
-        }
-    }
-};
-var results=game(playerSelection,computerSelection);
-document.write("<br><br><br>" + results);
-document.write("<hr><hr><hr>");}
+
+let computerScore = document.createElement('div');
+computerScore.id = "computerScore";
+
+let playerScore = document.createElement('div');
+playerScore.id = "playerScore";
+
+let singleResult = document.createElement('div');
+singleResult.id = "singleResult";
+document.body.appendChild(singleResult);
